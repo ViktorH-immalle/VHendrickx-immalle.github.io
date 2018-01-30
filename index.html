@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>reveal-md</title>
+        <link rel="stylesheet" href="./css/reveal.css">
+        <link rel="stylesheet" href="./css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="./css/highlight/zenburn.css">
+        <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">### Wat zijn optionele parameters? 
+zie hoofdstuk 5.10
+Voorbeeld:
+
+```
+class Program {
+
+  static void Groet(string naam = "Robbe") 
+  {
+    Console.WriteLine("Hallo {0}!", naam);
+  }
+
+  static void Main(string[] args) 
+  {
+    Groet();
+    Groet("Robbe");
+  }
+}
+```</script></section><section  data-markdown><script type="text/template">### Uitleg:
+De parameter `naam` wordt in het voorbeeld bij de method zelf al gelijkgesteld aan een standaard variabele, waardoor bij de aanroep van de method het optioneel is om de parameter nog aan een waarde gelijk te stellen.
+</script></section><section  data-markdown><script type="text/template">
+### Wat is parameter-binding? 
+zie hoofdstuk 5.20
+Voorbeeld:
+```
+static void Main(string[] args)
+	{
+            Console.WriteLine("Hoeveel dollar ?");
+            string invoer = Console.ReadLine();
+            EuroEquivalent(Convert.ToDouble(invoer));
+        }
+        static void EuroEquivalent(double dollar)
+        {
+            double euro = dollar/100 * 85;
+            Console.WriteLine(euro + " EUR");
+        }	
+```
+</script></section><section  data-markdown><script type="text/template">### Uitleg: 
+Parameter-binding wil zeggen dat het argument dat je bij de aanroep meegeeft, wordt gekopieerd naar lokale variabelen in de method. In het voorbeeld wordt de inhoud van `Convert.ToDouble(invoer)` gekopieerd naar de parameter `double dollar` in de method `EuroEquivalent`.
+</script></section><section  data-markdown><script type="text/template">
+### Wat is method-overloading?
+zie hoofdstuk 5.22
+Voorbeeld:
+```
+        static void Main(string[] args)
+        {
+            int a = 4;
+            int b = 5;
+            double c = 9;
+            double d = 10;
+
+            Swap(ref c, ref d);
+            Swap(ref a, ref b);
+        }
+
+        static void Swap(ref int a, ref int b)
+        {
+            int aCopy;
+            aCopy = a;
+            a = b;
+            b = aCopy;
+        }
+
+        static void Swap(ref double a, ref double b)
+        {
+            double aCopy;
+            aCopy = a;
+            a = b;
+            b = aCopy;
+        }
+```</script></section><section  data-markdown><script type="text/template">### Uitleg:
+Method-overloading wil zeggen dat methods dezelfde naam hebben maar zoals in dit voorbeeld andere parameters hebben. Swap bestaat twee keer, één method met `int` -waardes en één met `double` -waardes. De Swap-method heeft in het voorbeeld dus twee overloads.
+</script></section><section  data-markdown><script type="text/template">
+### Hoe herken je in WPF event-handlers? 
+zie ook hoofdstuk 5.10
+Voorbeeld:
+```
+void Button_Click(object sender, RoutedEventArgs e)
+{
+	*event*
+}
+```</script></section><section  data-markdown><script type="text/template">### Uitleg:
+Je kan een event-handler in WPF herkennen aan de parameters die zijn meegegeven. Die zijn steeds `(object sender, RoutedEventArgs e)`. Je kan deze events ook altijd terugvinden in de XAML-code bij dat bepaalde object.
+</script></section><section  data-markdown><script type="text/template">
+### Waar moet je op letten bij b.v. de `AddYears()`-method van een `DateTime`-object?
+Voorbeeld:
+```
+DateTime jaren = new DateTime(2001,01,01);
+
+//variabele verandert niet:
+jaren.AddYears(1);
+
+//variabele verandert:
+jaren = jaren.AddYears(1);
+```</script></section><section  data-markdown><script type="text/template">### Uitleg:
+Als je de "AddYears()"-method niet gelijkstelt aan de DateTime waarbij je jaren toevoegt dan wordt de variabele niet aangepast.
+</script></section><section  data-markdown><script type="text/template">
+### Als je een variabele niet initialiseert welke waarde heeft hij dan?
+
+Voorbeelden (C# Interactive):
+```
+> string s;
+> s
+null
+> int i;
+> i
+0
+> bool b;
+> b
+false
+> char c;
+> c
+'\0'
+> double d;
+> d
+0
+> 
+```</script></section><section  data-markdown><script type="text/template">### Uitleg:
+In het voorbeeld maak ik in C# Interactive enkele variabelen van verschillende types. Ik initialiseer ze niet. Vervolgens roep ik ze aan en krijg ik de "standaard"-waarde die ze krijgen toegewezen als ze niet zijn geinitialiseerd. Bij ` string s ` is dit bv. "null", bij `int i` is het 0 en bij ` bool b` is dit "false". Bij het resultaat "null", zit er eigenlijk niks in de variabele.
+
+---</script></section></div>
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: './plugin/zoom-js/zoom.js', async: true },
+              { src: './plugin/notes/notes.js', async: true },
+              { src: './plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default', // none/fade/slide/convex/concave/zoom
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {};
+            options = extend(defaultOptions, options, queryOptions);
+        </script>
+
+
+        <script>
+            Reveal.initialize(options);
+        </script>
+    </body>
+</html>
